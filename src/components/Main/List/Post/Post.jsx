@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import formatDate from '../../../../utils/formatDate';
 import Content from './Content';
 import Rating from './Rating';
-import deleteImg from './img/delete.svg';
+import {ReactComponent as Delete} from './img/delete.svg';
 
 export const Post = ({postData}) => {
   const {title, author, ups, date} = postData;
@@ -14,7 +14,7 @@ export const Post = ({postData}) => {
 
       <Content title={title} author={author} />
       <Rating ups={ups} />
-      <button className={style.delete}><img src={deleteImg}/></button>
+      <button className={style.delete}><Delete /></button>
       <time className={style.date} dateTime={date}>{formatDate(date)}</time>
     </li>
   );
