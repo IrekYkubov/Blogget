@@ -49,11 +49,6 @@
   height: 100%;
 }
 
-.img {
-  grid-area: img;
-  border-radius: 20px;
-  align-self: center;
-}
 
 .date {
   grid-area: data;

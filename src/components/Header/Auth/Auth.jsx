@@ -1,44 +1,23 @@
 import style from './Auth.module.css';
 import PropTypes from 'prop-types';
 import {ReactComponent as Login} from './img/login.svg';
-import {urlAuth} from '../../api/auth';
+import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
-import {useEffect, useState} from 'react';
-import {URL_API} from '../../api/const';
+import {useState, useContext} from 'react';
+import {tokenContext} from '../../../context/tokenContext';
+import {authContext} from '../../../context/authContext';
 
-export const Auth = ({token, delToken}) => {
-  const [auth, setAuth] = useState({});
+
+export const Auth = () => {
+  const {delToken} = useContext(tokenContext);
+  const {auth, clearAuth} = useContext(authContext);
   const [loqoutBtn, setLoqoutBtn] = useState(false);
-  useEffect(() => {
-    if (!token) return;
-    fetch(`${URL_API}/api/v1/me`, {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-      .then(response => {
-        if (response.status === 401) {
-          throw new Error(response.status);
-        }
-        return response.json();
-      })
-      .then(({name, icon_img: iconImg}) => {
-        const img = iconImg.replace(/\?.*$/, '');
-        setAuth({name, img});
-      })
-      .catch(err => {
-        console.error(err);
-        setAuth({});
-        delToken();
-      });
-  }, [token]);
-
   const handleShowLoqout = () => {
     setLoqoutBtn(!loqoutBtn);
   };
   const handleDelToken = () => {
     delToken();
-    setAuth({});
+    clearAuth();
   };
 
   return (
@@ -52,13 +31,13 @@ export const Auth = ({token, delToken}) => {
             alt={`Аватар ${auth.name}`}
             onClick={handleShowLoqout}
           />
-          {loqoutBtn && (
+          {loqoutBtn === true && (
             <Text className={style.logout} onClick={handleDelToken}>Выйти</Text>
           )}
         </button>
         ) : (
           <Text className={style.authLink} As='a' href={urlAuth}>
-            <Login width={50} height={50} />
+            <Login className={style.svg} width={50} height={50} />
           </Text>
         )
       }
