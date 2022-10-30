@@ -8,12 +8,19 @@ import {Thumbnail} from './Thumbnail/Thumbnail';
 import {ReactComponent as Delete} from './img/delete.svg';
 
 export const Post = ({postData}) => {
-  const {title, author, ups, date, thumbnail} = postData;
+  const {
+    title,
+    author,
+    ups,
+    selftext: markdown,
+    date,
+    thumbnail
+  } = postData;
   return (
     <li className={style.post}>
       <Thumbnail thumbnail={thumbnail}/>
 
-      <Content title={title} author={author} />
+      <Content title={title} author={author} markdown={markdown} />
 
       <Rating ups={ups} />
 
